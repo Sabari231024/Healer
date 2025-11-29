@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  llm-service:
+    build: ./llm-service
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./models:/models
+
+  healer-service:
+    build: ./healer-service
+    environment:
+      - GIT_REPO_URL=https://github.com/your-org/your-repo.git
+      - GITHUB_TOKEN=your_github_token_here
+      - GITHUB_REPO_FULL=your-org/your-repo
+      - LLM_SERVICE_URL=http://llm-service:8002/generate
+    volumes:
+      - ./repo-cache:/repo
+
+  app-service:
+    build: ./app-service
+    depends_on:
+      - healer-service
+    ports:
+      - "8000:8000"

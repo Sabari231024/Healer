@@ -1,3 +1,4 @@
+from functools import wraps
 import inspect, traceback, httpx, anyio
 
 HEALER_URL = "http://healer-service:8001/report_error"
@@ -23,8 +24,10 @@ async def report_error_to_healer(func, exc, args, kwargs):
         except:
             pass
 
+
 def self_heal(func):
     if inspect.iscoroutinefunction(func):
+        @wraps(func)   # <-- IMPORTANT
         async def async_wrap(*args, **kwargs):
             try:
                 return await func(*args, **kwargs)
@@ -32,10 +35,13 @@ def self_heal(func):
                 await report_error_to_healer(func, e, args, kwargs)
                 raise
         return async_wrap
+
+    @wraps(func)   # <-- IMPORTANT
     def sync_wrap(*args, **kwargs):
         try:
             return func(*args, **kwargs)
         except Exception as e:
             anyio.run(report_error_to_healer, func, e, args, kwargs)
             raise
+
     return sync_wrap

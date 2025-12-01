@@ -5,7 +5,7 @@ from .git_client import ensure_repo_cloned, create_branch, commit_and_push, crea
 from .config import GIT_CLONE_PATH
 from .models import ErrorReport
 
-PATCH_FILE = "app/logic.py"
+PATCH_FILE = "app/main.py"
 
 async def process_error_and_create_pr(err: ErrorReport):
     ensure_repo_cloned()

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from llama_cpp import Llama
 
-MODEL_PATH = "/models/qwen2.5-coder-1.5b-q4.gguf"
+MODEL_PATH = "/models/hf_Qwen_Qwen2.5-Coder-1.5B-Instruct.Q4_K_M.gguf"
 
 llm = Llama(model_path=MODEL_PATH, n_ctx=4096, n_threads=2)
 app = FastAPI()

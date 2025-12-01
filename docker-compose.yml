@@ -10,9 +10,9 @@ services:
   healer-service:
     build: ./healer-service
     environment:
-      - GIT_REPO_URL=https://github.com/your-org/your-repo.git
-      - GITHUB_TOKEN=your_github_token_here
-      - GITHUB_REPO_FULL=your-org/your-repo
+      - GIT_REPO_URL=https://github.com/Sabari231024/Healer.git
+      - GITHUB_TOKEN=""
+      - GITHUB_REPO_FULL=Sabari231024/Healer
       - LLM_SERVICE_URL=http://llm-service:8002/generate
     volumes:
       - ./repo-cache:/repo
